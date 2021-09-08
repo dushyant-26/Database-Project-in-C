@@ -1,17 +1,11 @@
 #include "createOperations.h"
 Table* createTable(Table* table, char* table_name) {
-    table->file = fopen(table_name, "w+");
-
     char input[100];
-    printf("Enter the number of attributes\n");
+    printf("\nEnter the number of attributes\n");
     scanf(" %s", input);
 
     if(isInteger(input) == 0) {
         printf("\nInvalid Data(Expected INTEGER)\n");
-        char command[100];
-        copyString(command, "rm ");
-        strcat(command,dbName);
-        system(command);
         exit(1);
     }
     cols = convert_to_int(input);
@@ -19,6 +13,7 @@ Table* createTable(Table* table, char* table_name) {
     rows = 0;
     c_name = (char**)malloc(sizeof(char*) * cols);
     datatype = (int*)malloc(sizeof(int) * cols);
+    char command1[100];
     for(int i = 0; i < cols; i++) {
         c_name[i] = (char*)malloc(50);
         printf("\nEnter the name of attribute no. %d\n", i + 1);
@@ -28,16 +23,18 @@ Table* createTable(Table* table, char* table_name) {
 
         if(isInteger(input) == 0) {
             printf("\nInvalid Data(Expected INTEGER)\n");
-            char command[100];
-            copyString(command, "rm ");
-            strcat(command,dbName);
-            system(command);
             exit(1);
         }
+	int type = convert_to_int(input);
+	if(type < 0 ||type > 3) {
+	    printf("\nNo Such DataType\n");
+	    exit(1);
+	}
         datatype[i] = convert_to_int(input);
 
     }
 
+    table->file = fopen(table_name, "w+");
     writeHeaders(table);
 
     return table;
@@ -78,7 +75,7 @@ void insertData(Table* table) {
     fseek(table->file, 0, SEEK_END);
 
     for(int i = 0; i < cols; i++) {
-        printf("Enter the data for %s\n",c_name[i]);
+        printf("\nEnter the data for %s\n",c_name[i]);
         int correctDatatype = scanData(i,&entry[i]);
         if(correctDatatype == -1) {
             backToDashboard();

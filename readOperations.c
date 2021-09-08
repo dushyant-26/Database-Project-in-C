@@ -34,6 +34,7 @@ void readData(Table* table) {
         format((void*)c_name[i]);
     }
     printf("\n");
+    int numsPrinted = 0;
     for(int i = 0; i < rows; i++) {
         fread(&entry,sizeof(columns),cols,table->file);
         if(selectAll == 0) {
@@ -49,10 +50,28 @@ void readData(Table* table) {
             }
         }
         printf("\n");
+	numsPrinted++;
         for(int j = 0; j < cols; j++) {
             printData(j, &entry[j]);
         }
         printf("\n");
+    }
+    if(numsPrinted == 0) {
+        header();
+	printf("\nNo data found with this constraint!\n");
+    }
+    backToDashboard();
+}
+
+void readTableStructure(Table* table) {
+    header();
+    printf("\nDatabase Name - %s\n",dbName);
+    printf("\nAttribute\t");
+    printf("Datatype\n");
+    for(int i = 0; i < cols; i++) {
+        printf("\n%s\t",c_name[i]);
+	format(c_name[i]);
+	printf("%s\n",getDatatype(i));
     }
     backToDashboard();
 }

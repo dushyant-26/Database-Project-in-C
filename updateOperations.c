@@ -25,7 +25,7 @@ void updateData(Table* table) {
         return;
     }
     char constraint[50];
-    printf("\n On the basis of which constraint, do you want to update the entries(Enter * for updating each entry)\n");
+    printf("\nOn the basis of which constraint, do you want to update the entries(Enter * for updating each entry)\n");
     scanf(" %s",constraint);
 
     columns constraintVal;
@@ -50,7 +50,7 @@ void updateData(Table* table) {
     char updateAttr[50];
     columns updatedVal;
     int attrPos;
-    printf("\n On which attribute, do you want to perform the update operation\n");
+    printf("\nOn which attribute, do you want to perform the update operation\n");
     scanf(" %s",updateAttr);
 
     attrPos = attributeNum(change_to_uppercase(updateAttr));
@@ -63,12 +63,14 @@ void updateData(Table* table) {
     printf("Enter the new updated value for %s \n",updateAttr);
     scanData(attrPos, &updatedVal);
 
+    int updated = 0;
     columns entry[cols];
     moveToData(table);
     for(int i = 0; i < rows; i++) {
         fread(&entry,sizeof(columns),cols,table->file);
         if(isDataEqual(attributePos, &entry[attributePos], &constraintVal) == 1) {
             updateEntry(attrPos,&entry[attrPos], &updatedVal);
+	    updated++;
         }
         fwrite(&entry, sizeof(columns),cols, temp->file);
     }
@@ -81,7 +83,12 @@ void updateData(Table* table) {
     table->file = temp->file;
     free(temp);
     header();
-    printf("\nData updated Successfully!\n");
+    if(updated == 0) {
+        printf("\nNo Data Found with this constraint!\n");
+    }
+    else{
+        printf("\nData updated Successfully!\n");
+    }
     backToDashboard();
 }
 

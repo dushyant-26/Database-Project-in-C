@@ -1,4 +1,56 @@
-#include "utilities.h"
+#include <stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+int cols;
+int rows;
+int* datatype;
+char** c_name;
+char* dbName;
+
+typedef union data {
+    int integer;
+    char character;
+    char string[50];
+    double decimal;
+} columns;
+
+typedef struct table {
+    FILE* file;
+} Table;
+
+void copyString(char* dest, char* src) {
+    if(src[0] >= 97 && src[0] <= 122) {
+        src[0] -= 32;
+    }
+    int i;
+    for(i = 0; src[i] != '\0'; i++) {
+        dest[i] = src[i];
+    }
+    dest[i] = '\0';
+}
+
+char* getDatatype(int pos) {
+    char* str = (char*)malloc(10);
+    switch(datatype[pos]) {
+        case 0:
+	    copyString(str,"INTEGER");
+	    break;
+	case 1:
+	    copyString(str,"CHARACTER");
+	    break;
+	case 2:
+	    copyString(str,"STRING");
+	    break;
+	case 3:
+	    copyString(str,"DOUBLE");
+	    break;
+        default:
+	    printf("ERROR\n");
+	    exit(1);
+    }
+    return str;
+}
 
 char* change_to_uppercase(char* str) {
     for (int i = 0; str[i]!='\0'; i++) {
@@ -37,17 +89,6 @@ void header() {
     printf("==============================================================================================================================\n");
     printf("      *******************************************[ Welcome to your Database]********************************************      \n");
     printf("==============================================================================================================================\n");
-}
-
-void copyString(char* dest, char* src) {
-    if(src[0] >= 97 && src[0] <= 122) {
-        src[0] -= 32;
-    }
-    int i;
-    for(i = 0; src[i] != '\0'; i++) {
-        dest[i] = src[i];
-    }
-    dest[i] = '\0';
 }
 
 int isStringPresentAtStart(char* firstVal, char* secondVal) {

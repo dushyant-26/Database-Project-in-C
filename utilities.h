@@ -37,6 +37,7 @@ void header();
 void writeHeaders(Table* table);
 void backToDashboard();
 void moveToData(Table* table);
+char* getDatatype(int pos);
 
 #define utilities
 #endif

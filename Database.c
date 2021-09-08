@@ -17,6 +17,8 @@ void dashboard(Table* table) {
         printf("3. Delete operation\n");
         printf("4. Truncate operation\n");
         printf("5. Update operation\n");
+	printf("6. Read table structure\n");
+	printf("7. Delete the table(WARNING: This will make database loose all the data)\n");
         printf("Enter any other key to exit the Program\n\n");
 
         scanf("%d",&choice);
@@ -37,6 +39,12 @@ void dashboard(Table* table) {
             case 5:
                 updateData(table);
                 break;
+	    case 6:
+		readTableStructure(table);
+		break;
+	    case 7:
+		deleteTable(table);
+		break;
             default:
                 system("clear");
                 exit(1);

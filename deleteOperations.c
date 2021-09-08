@@ -42,7 +42,7 @@ void deleteData(Table* table) {
         return;
     }
     char constraint[50];
-    printf("\n On the basis of which constraint, do you want to delete the entries(Enter * for deleting each entry)\n");
+    printf("\nOn the basis of which constraint, do you want to delete the entries(Enter * for deleting each entry)\n");
     scanf(" %s",constraint);
 
     if(strcmp(constraint,"*") == 0) {
@@ -79,6 +79,9 @@ void deleteData(Table* table) {
             deleted++;
         }
     }
+    if(deleted == 0) {
+        header();
+    }
     char* command1 = (char*)malloc(100);
     strcpy(command1, "mv ");
     strcat(command1,"temp ");
@@ -90,6 +93,11 @@ void deleteData(Table* table) {
     free(temp);
     updateRow(table);
     header();
-    printf("\nData deleted Successfully!\n");
+    if(deleted == 0) {
+        printf("\nNo data present with this constraint!\n");
+    }
+    else {
+        printf("\nData deleted Successfully!\n");
+    }
     backToDashboard();
 }
