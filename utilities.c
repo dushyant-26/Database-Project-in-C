@@ -231,7 +231,6 @@ void printData(int pos, columns* input) {
                     break;
                 case 3:
                     printf("%lf\t",input->decimal);
-                    format((void*)(&input->decimal));
                     break;
     }
 }

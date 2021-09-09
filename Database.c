@@ -1,15 +1,21 @@
-#include "utilities.h"
 #include "createOperations.h"
 #include "readOperations.h"
 #include "updateOperations.h"
 #include "deleteOperations.h"
+
+void databaseHeader() {
+    system("clear");
+    printf("==============================================================================================================================\n");
+    printf("      *******************************************[ Welcome to your Database]********************************************      \n");
+    printf("==============================================================================================================================\n");
+}
 
 void dashboard(Table* table) {
     while(1) {
         int choice = 0;
         int num = 0;
 
-        header();
+        databaseHeader();
 
         printf("\nWhich operation do you want to do?\n");
         printf("1. Insert operation\n");
