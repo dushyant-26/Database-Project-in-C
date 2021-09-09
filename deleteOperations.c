@@ -1,5 +1,9 @@
+//All the utility functions are included in utilities.h
 #include "deleteOperations.h"
 
+//Removes the table along with all its structure data
+//params:
+//Table* table: pointer to structure containing file
 void deleteTable(Table* table) {
     char* command = (char*)malloc(100);
     strcpy(command, "rm ");
@@ -9,6 +13,9 @@ void deleteTable(Table* table) {
     exit(1);
 }
 
+//Make database empty by deleting all the data entries.
+//params:
+//Table* table: pointer to structure containing file
 void truncate(Table* table) {
     header();
     if(rows == 0) {
@@ -34,6 +41,9 @@ void truncate(Table* table) {
     backToDashboard();
 }
 
+//Delete entry from table according to the constraint entered from user
+//params:
+//Table* table: pointer to structure containing file
 void deleteData(Table* table) {
     header();
     if(rows == 0) {

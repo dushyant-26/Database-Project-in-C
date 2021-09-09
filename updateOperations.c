@@ -1,22 +1,9 @@
+//All the utility functions aree included in utilities.h
 #include "updateOperations.h"
 
-void updateEntry(int pos,columns* input,columns* updatedVal) {
-    switch(datatype[pos]) {
-            case 0:
-                input->integer = updatedVal->integer;
-                break;
-            case 1:
-                input->character = updatedVal->character;
-                break;
-            case 2:
-                copyString(input->string,updatedVal->string);
-                break;
-            case 3:
-                input->decimal = updatedVal->decimal;
-                break;
-    }
-}
-
+//updates the data entries in table with given constraint
+//params:
+//Table* table: pointer to structure containing file
 void updateData(Table* table) {
     header();
     if(rows == 0) {
@@ -24,13 +11,15 @@ void updateData(Table* table) {
         backToDashboard();
         return;
     }
+
     char constraint[50];
     printf("\nOn the basis of which constraint, do you want to update the entries(Enter * for updating each entry)\n");
     scanf(" %s",constraint);
 
     columns constraintVal;
     int attributePos;
-    int selectAll = (strcmp(constraint, "*") == 0);
+    int selectAll = (strcmp(constraint, "*") == 0); 
+
     if(selectAll == 0) {
         attributePos = attributeNum(change_to_uppercase(constraint));
         if(attributePos == -1) {
@@ -39,7 +28,7 @@ void updateData(Table* table) {
             backToDashboard();
             return;
         }
-        printf("Enter value for constraint\n");
+        printf("\nEnter value for constraint\n");
         scanData(attributePos, &constraintVal);
     }
     Table* temp = (Table*)malloc(sizeof(Table));
@@ -60,7 +49,7 @@ void updateData(Table* table) {
         backToDashboard();
         return;
     }
-    printf("Enter the new updated value for %s \n",updateAttr);
+    printf("\nEnter the new updated value for %s \n",updateAttr);
     scanData(attrPos, &updatedVal);
 
     int updated = 0;
@@ -68,7 +57,7 @@ void updateData(Table* table) {
     moveToData(table);
     for(int i = 0; i < rows; i++) {
         fread(&entry,sizeof(columns),cols,table->file);
-        if(isDataEqual(attributePos, &entry[attributePos], &constraintVal) == 1) {
+        if(selectAll == 1 || isDataEqual(attributePos, &entry[attributePos], &constraintVal) == 1) {
             updateEntry(attrPos,&entry[attrPos], &updatedVal);
 	    updated++;
         }

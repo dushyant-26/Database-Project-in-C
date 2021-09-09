@@ -1,4 +1,9 @@
+//All the utility functions present in utility.c
 #include "readOperations.h"
+
+//reads the data from file and display on the screen
+//params:
+//Table* table: pointer to the Table containing file which need to be updated
 void readData(Table* table) {
     header();
     if(rows == 0) {
@@ -13,6 +18,8 @@ void readData(Table* table) {
     columns constraintVal;
     int attributePos;
     int selectAll = (strcmp(constraint, "*") == 0);
+    int wildCard = 0;
+    int valLength;
     if(selectAll == 0) {
         attributePos = attributeNum(change_to_uppercase(constraint));
         if(attributePos == -1) {
@@ -23,7 +30,15 @@ void readData(Table* table) {
         }
         printf("\nEnter value for constraint\n");
         scanData(attributePos, &constraintVal);
+        valLength = strlen(constraintVal.string);
+
+        if(datatype[attributePos] == 2 && constraintVal.string[valLength - 1] == '*') {
+            wildCard = 1;
+	    constraintVal.string[valLength - 1] = '\0';
+        }
     }
+
+
     columns entry[cols];
     moveToData(table);
 
@@ -38,7 +53,7 @@ void readData(Table* table) {
     for(int i = 0; i < rows; i++) {
         fread(&entry,sizeof(columns),cols,table->file);
         if(selectAll == 0) {
-            if(datatype[attributePos] == 2) {
+            if(datatype[attributePos] == 2 && wildCard == 1) {
                 if(isStringPresentAtStart(entry[attributePos].string,constraintVal.string) == 0) {
                     continue;
                 }
@@ -63,6 +78,9 @@ void readData(Table* table) {
     backToDashboard();
 }
 
+//prints the structure of table inluding its name,Attributes and their datatype
+//params:
+//Table* table: pointer to the Table containing file which need to be updated
 void readTableStructure(Table* table) {
     header();
     printf("\nDatabase Name - %s\n",dbName);

@@ -61,7 +61,7 @@ void dashboard(Table* table) {
 
 int main() {
     system("clear");
-    Table* table = openTable();
+    Table* table = getTable();
 
     dashboard(table);
 }

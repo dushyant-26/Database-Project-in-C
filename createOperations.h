@@ -1,4 +1,4 @@
 #include "utilities.h"
 Table* createTable(Table* table, char* table_name);
-Table* openTable();
+Table* getTable();
 void insertData(Table* table);

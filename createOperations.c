@@ -1,4 +1,11 @@
+//all the utility functions present in utilities.c
 #include "createOperations.h"
+
+//this creates the file and ask user for various attributes for table structure
+//params:
+//Table* table: a pointer to the table
+//char* table_name: name of the database
+//return Table*: a pointer to the structure containing FILE*.
 Table* createTable(Table* table, char* table_name) {
     char input[100];
     printf("\nEnter the number of attributes\n");
@@ -40,7 +47,9 @@ Table* createTable(Table* table, char* table_name) {
     return table;
 }
 
-Table* openTable() {
+//create or open the file and initialize all the table structure data in global variables.
+//return Table* : pointer to the structure containing FILE*
+Table* getTable() {
     char* table_name = (char*)malloc(50);
     printf("\nEnter the database name\n");
     scanf("%s",table_name);
@@ -69,6 +78,9 @@ Table* openTable() {
     return table;
 }
 
+
+//adds the data to the file in the form of union array.
+//all the utility functions present in utilities.c
 void insertData(Table* table) {
     header();
     columns entry[cols];
