@@ -10,14 +10,14 @@ This project is made using file system in c.
 ``` bash
 Note:  
 This project is not platform independent at this moment.  
-So it can only be run on Ubuntu system.
+So it can only be run on Linux system.
 ```
 
 ## Steps to execute the project into your system
 
 * Clone this repository into your system
 * Run the ***make*** command
-* Now execute **./Database** and now you can access the database.
+* Now execute **./Database** whenever you want to access the database.
 
 ## Operations of `Database` Included in Project
 
@@ -77,7 +77,7 @@ This includes -
 * ***void updateData(Table\* table)***  
 
 >This method will take **Table\*** as parameter. It takes input from user regarding new data and constraint and update the data in database according to the constraint added by user.  
-All the data can be read by adding \* as a constraint.
+All the data can be updated by adding \* as a constraint.
 
 ### `Delete Operation`
 
