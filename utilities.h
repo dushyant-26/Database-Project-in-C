@@ -1,4 +1,5 @@
-#ifndef utilities
+#ifndef UTILITY
+#define UTILITY
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -40,5 +41,4 @@ void moveToData(Table* table);
 char* getDatatype(int pos);
 void updateEntry(int pos,columns* input,columns* updatedVal);
 
-#define utilities
 #endif
